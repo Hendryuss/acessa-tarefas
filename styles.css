@@ -95,18 +95,30 @@ body {
 main:focus, h2:focus { outline: none; box-shadow: none; }
 
 /* ---------- Links de salto ---------- */
-.skip-links a {
+/* O contêiner inteiro fica acima da tela (translateY -100% da própria
+   altura, então continua escondido com qualquer tamanho de texto) e
+   aparece quando um link recebe foco. Links lado a lado, sem sobreposição
+   (WCAG 2.5.8). */
+.skip-links {
   position: absolute;
-  left: 1rem;
-  top: -100px;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  padding: .5rem 1rem;
+  transform: translateY(-100%);
+}
+.skip-links:focus-within { transform: none; }
+.skip-links a {
   background: var(--foco);
   color: #0b0c0c;
   padding: .75rem 1rem;
   font-weight: 700;
   text-decoration: underline;
 }
-.skip-links a:focus { top: 1rem; }
 
 /* ---------- Topo / rodapé ---------- */
 .topo { background: var(--primaria); color: var(--primaria-texto); padding: 1rem 0; }
