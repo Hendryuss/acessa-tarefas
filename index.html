@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Acessa Tarefas: gerenciador de tarefas acessível, projetado segundo a WCAG 2.2 e o eMAG.">
+  <title>Acessa Tarefas – Gerenciador de tarefas acessível</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Links de salto (WCAG 2.4.1 / eMAG 1.5) -->
+  <nav class="skip-links" aria-label="Atalhos de navegação">
+    <a href="#conteudo">Ir para o conteúdo principal</a>
+    <a href="#nova-tarefa-titulo">Ir para o formulário de nova tarefa</a>
+    <a href="#lista-titulo">Ir para a lista de tarefas</a>
+    <a href="#acessibilidade-titulo">Ir para as opções de acessibilidade</a>
+  </nav>
+
+  <header class="topo">
+    <div class="container topo-inner">
+      <p class="logo"><span aria-hidden="true">✔</span> Acessa Tarefas</p>
+      <p class="slogan">Organize seu dia, do seu jeito.</p>
+    </div>
+  </header>
+
+  <main id="conteudo" tabindex="-1" class="container">
+    <h1>Minhas tarefas</h1>
+
+    <!-- Painel de acessibilidade -->
+    <section class="cartao" aria-labelledby="acessibilidade-titulo">
+      <h2 id="acessibilidade-titulo" tabindex="-1">Opções de acessibilidade</h2>
+      <div class="barra-a11y" role="group" aria-label="Ajustes de leitura">
+        <button type="button" id="btn-contraste" aria-pressed="false">Alto contraste</button>
+        <button type="button" id="btn-tema" aria-pressed="false">Tema escuro</button>
+        <button type="button" id="btn-diminuir" aria-describedby="tamanho-fonte">A− Diminuir texto</button>
+        <button type="button" id="btn-aumentar" aria-describedby="tamanho-fonte">A+ Aumentar texto</button>
+        <button type="button" id="btn-espaco" aria-pressed="false">Espaçamento amplo</button>
+        <button type="button" id="btn-restaurar">Restaurar padrão</button>
+      </div>
+      <p id="tamanho-fonte" class="dica">Tamanho do texto: <span id="tamanho-valor">100%</span></p>
+    </section>
+
+    <!-- Formulário -->
+    <section class="cartao" aria-labelledby="nova-tarefa-titulo">
+      <h2 id="nova-tarefa-titulo" tabindex="-1">Nova tarefa</h2>
+      <p class="dica">Campos marcados com <span aria-hidden="true">*</span><span class="sr-only">asterisco</span> são obrigatórios.</p>
+
+      <div id="resumo-erros" class="resumo-erros" tabindex="-1" hidden>
+        <h3 id="resumo-erros-titulo">Corrija os erros abaixo:</h3>
+        <ul id="resumo-erros-lista"></ul>
+      </div>
+
+      <form id="form-tarefa" novalidate>
+        <div class="campo">
+          <label for="titulo">Título da tarefa <span aria-hidden="true">*</span></label>
+          <input type="text" id="titulo" name="titulo" required maxlength="80"
+                 autocomplete="off" aria-describedby="titulo-dica titulo-erro">
+          <p id="titulo-dica" class="dica">Ex.: Pagar a conta de luz. Máximo de 80 caracteres.</p>
+          <p id="titulo-erro" class="erro" hidden></p>
+        </div>
+
+        <div class="linha">
+          <div class="campo">
+            <label for="prioridade">Prioridade</label>
+            <select id="prioridade" name="prioridade">
+              <option value="baixa">Baixa</option>
+              <option value="media" selected>Média</option>
+              <option value="alta">Alta</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="prazo">Prazo</label>
+            <input type="date" id="prazo" name="prazo" aria-describedby="prazo-dica prazo-erro">
+            <p id="prazo-dica" class="dica">Opcional. Não pode ser uma data passada.</p>
+            <p id="prazo-erro" class="erro" hidden></p>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="descricao">Descrição</label>
+          <textarea id="descricao" name="descricao" rows="3" maxlength="300"
+                    aria-describedby="descricao-contador"></textarea>
+          <p id="descricao-contador" class="dica">0 de 300 caracteres usados.</p>
+        </div>
+
+        <div class="acoes-form">
+          <button type="submit" class="primario" id="btn-salvar">Adicionar tarefa</button>
+          <button type="button" id="btn-cancelar-edicao" hidden>Cancelar edição</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Lista -->
+    <section class="cartao" aria-labelledby="lista-titulo">
+      <h2 id="lista-titulo" tabindex="-1">Lista de tarefas</h2>
+
+      <fieldset class="filtros">
+        <legend>Mostrar tarefas</legend>
+        <label><input type="radio" name="filtro" value="todas" checked> Todas</label>
+        <label><input type="radio" name="filtro" value="pendentes"> Pendentes</label>
+        <label><input type="radio" name="filtro" value="concluidas"> Concluídas</label>
+      </fieldset>
+
+      <p id="contador" class="contador">Nenhuma tarefa cadastrada.</p>
+
+      <ul id="lista" class="lista" aria-describedby="contador"></ul>
+      <p id="lista-vazia" class="vazio">Nada por aqui. Adicione uma tarefa no formulário acima.</p>
+    </section>
+
+    <!-- Ajuda de teclado -->
+    <section class="cartao" aria-labelledby="ajuda-titulo">
+      <h2 id="ajuda-titulo">Como usar pelo teclado</h2>
+      <dl class="atalhos">
+        <dt><kbd>Tab</kbd> / <kbd>Shift</kbd> + <kbd>Tab</kbd></dt>
+        <dd>Avança / volta entre os controles.</dd>
+        <dt><kbd>Espaço</kbd></dt>
+        <dd>Marca ou desmarca uma tarefa como concluída.</dd>
+        <dt><kbd>Enter</kbd></dt>
+        <dd>Ativa botões e envia o formulário.</dd>
+        <dt><kbd>Setas</kbd></dt>
+        <dd>Trocam o filtro (Todas, Pendentes, Concluídas).</dd>
+        <dt><kbd>Esc</kbd></dt>
+        <dd>Fecha a janela de confirmação.</dd>
+      </dl>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="container">
+      <p>Projeto Final – Tecnologias Assistivas – UEPG, 2026. Desenvolvido segundo WCAG 2.2 (nível AA) e eMAG 3.1.</p>
+    </div>
+  </footer>
+
+  <!-- Diálogo de confirmação (foco preso pelo <dialog> nativo) -->
+  <dialog id="dialogo-excluir" aria-labelledby="dialogo-titulo" aria-describedby="dialogo-texto">
+    <h2 id="dialogo-titulo">Excluir tarefa?</h2>
+    <p id="dialogo-texto"></p>
+    <div class="acoes-form">
+      <button type="button" id="btn-confirmar-exclusao" class="perigo">Excluir</button>
+      <button type="button" id="btn-cancelar-exclusao">Cancelar</button>
+    </div>
+  </dialog>
+
+  <!-- Regiões vivas para leitores de tela -->
+  <div id="aviso" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+  <div id="alerta" class="sr-only" role="alert" aria-atomic="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

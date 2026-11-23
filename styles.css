@@ -1,0 +1,260 @@
+/* =========================================================
+   Acessa Tarefas – folha de estilos
+   Todas as cores foram verificadas para contraste mínimo
+   4.5:1 (texto) e 3:1 (componentes) – WCAG 1.4.3 / 1.4.11.
+   ========================================================= */
+
+:root {
+  --escala: 1;
+  --entrelinha: 1.5;
+  --espaco-letra: normal;
+  --espaco-palavra: normal;
+
+  --fundo: #f6f7f9;
+  --superficie: #ffffff;
+  --texto: #1a1a1a;
+  --texto-suave: #4a4f57;     /* 8.0:1 sobre branco */
+  --borda: #6b717a;           /* 4.9:1 – componentes */
+  --primaria: #0b5cad;        /* 6.6:1 com branco */
+  --primaria-texto: #ffffff;
+  --perigo: #b3261e;          /* 6.5:1 com branco */
+  --sucesso: #1e6b34;
+  --foco: #ffbf47;
+  --foco-borda: #0b0c0c;
+  --alta: #b3261e;
+  --media: #8a5300;
+  --baixa: #1e6b34;
+}
+
+/* Tema escuro */
+html.tema-escuro {
+  --fundo: #121417;
+  --superficie: #1d2025;
+  --texto: #eceff3;
+  --texto-suave: #c3c8cf;
+  --borda: #8d949e;
+  --primaria: #8ec5ff;
+  --primaria-texto: #0b1a2b;
+  --perigo: #ffb4ab;
+  --sucesso: #8fd9a3;
+  --alta: #ffb4ab;
+  --media: #ffd27a;
+  --baixa: #8fd9a3;
+}
+
+/* Alto contraste (meta AAA – 7:1) */
+html.alto-contraste {
+  --fundo: #000000;
+  --superficie: #000000;
+  --texto: #ffffff;
+  --texto-suave: #ffffff;
+  --borda: #ffffff;
+  --primaria: #ffff00;
+  --primaria-texto: #000000;
+  --perigo: #ff7b7b;
+  --sucesso: #7dff9b;
+  --foco: #00ffff;
+  --foco-borda: #00ffff;
+  --alta: #ff7b7b;
+  --media: #ffff00;
+  --baixa: #7dff9b;
+}
+html.alto-contraste a { color: #ffff00; }
+
+/* Espaçamento de texto (WCAG 1.4.12) */
+html.espaco-amplo {
+  --entrelinha: 2;
+  --espaco-letra: 0.12em;
+  --espaco-palavra: 0.16em;
+}
+html.espaco-amplo p { margin-bottom: 2em; }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-size: calc(100% * var(--escala)); }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: var(--entrelinha);
+  letter-spacing: var(--espaco-letra);
+  word-spacing: var(--espaco-palavra);
+  background: var(--fundo);
+  color: var(--texto);
+}
+
+.container { max-width: 52rem; margin: 0 auto; padding: 0 1rem; }
+
+/* ---------- Foco sempre visível (WCAG 2.4.7 / 2.4.11) ---------- */
+:focus-visible {
+  outline: 3px solid var(--foco-borda);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--foco);
+}
+main:focus, h2:focus { outline: none; box-shadow: none; }
+
+/* ---------- Links de salto ---------- */
+.skip-links a {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100;
+  background: var(--foco);
+  color: #0b0c0c;
+  padding: .75rem 1rem;
+  font-weight: 700;
+  text-decoration: underline;
+}
+.skip-links a:focus { top: 1rem; }
+
+/* ---------- Topo / rodapé ---------- */
+.topo { background: var(--primaria); color: var(--primaria-texto); padding: 1rem 0; }
+.topo-inner { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem 1rem; }
+.logo { font-size: 1.5rem; font-weight: 800; margin: 0; }
+.slogan { margin: 0; }
+html.alto-contraste .topo { border-bottom: 3px solid #fff; }
+
+.rodape { margin-top: 2rem; padding: 1.5rem 0; border-top: 1px solid var(--borda); color: var(--texto-suave); }
+
+h1 { font-size: 2rem; margin: 1.5rem 0 1rem; }
+h2 { font-size: 1.35rem; margin: 0 0 .75rem; }
+
+.cartao {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ---------- Formulário ---------- */
+.campo { margin-bottom: 1rem; display: flex; flex-direction: column; flex: 1 1 12rem; }
+.linha { display: flex; flex-wrap: wrap; gap: 0 1rem; }
+label, legend { font-weight: 600; margin-bottom: .25rem; }
+
+input[type="text"], input[type="date"], select, textarea {
+  font: inherit;
+  color: var(--texto);
+  background: var(--superficie);
+  border: 2px solid var(--borda);
+  border-radius: 6px;
+  padding: .6rem .7rem;
+  min-height: 44px;              /* alvo de toque – WCAG 2.5.8 */
+}
+input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--perigo); border-width: 3px; }
+html.tema-escuro input[type="date"] { color-scheme: dark; }
+html.alto-contraste input[type="date"] { color-scheme: dark; }
+
+.dica { color: var(--texto-suave); font-size: .95rem; margin: .25rem 0 0; }
+.erro { color: var(--perigo); font-weight: 700; margin: .25rem 0 0; }
+.erro::before { content: "⚠ "; }
+
+.resumo-erros {
+  border: 3px solid var(--perigo);
+  border-radius: 6px;
+  padding: .75rem 1rem;
+  margin-bottom: 1rem;
+}
+.resumo-erros h3 { margin: 0 0 .5rem; font-size: 1.1rem; color: var(--perigo); }
+.resumo-erros a { color: var(--perigo); font-weight: 700; }
+
+/* ---------- Botões ---------- */
+button {
+  font: inherit;
+  min-height: 44px;
+  min-width: 44px;
+  padding: .5rem 1rem;
+  border-radius: 6px;
+  border: 2px solid var(--primaria);
+  background: var(--superficie);
+  color: var(--texto);
+  cursor: pointer;
+}
+button:hover { text-decoration: underline; }
+button.primario { background: var(--primaria); color: var(--primaria-texto); font-weight: 700; }
+button.perigo { background: var(--perigo); border-color: var(--perigo); color: #fff; font-weight: 700; }
+html.tema-escuro button.perigo, html.alto-contraste button.perigo { color: #000; }
+button[aria-pressed="true"] { background: var(--primaria); color: var(--primaria-texto); font-weight: 700; }
+button[aria-pressed="true"]::before { content: "✓ "; }
+
+.acoes-form, .barra-a11y { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+/* ---------- Filtros ---------- */
+.filtros { border: 1px solid var(--borda); border-radius: 6px; padding: .5rem 1rem 1rem; margin: 0 0 1rem; }
+.filtros label { font-weight: 400; margin-right: 1.25rem; display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; }
+.filtros input { width: 1.25rem; height: 1.25rem; accent-color: var(--primaria); }
+
+.contador { font-weight: 600; }
+
+/* ---------- Lista ---------- */
+.lista { list-style: none; padding: 0; margin: 0; }
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: .75rem;
+  padding: .9rem 0;
+  border-top: 1px solid var(--borda);
+}
+.item:first-child { border-top: none; }
+.item input[type="checkbox"] { width: 1.5rem; height: 1.5rem; margin-top: .2rem; accent-color: var(--primaria); flex: none; }
+.item-corpo { flex: 1 1 14rem; }
+.item-titulo { font-weight: 700; font-size: 1.1rem; }
+.item.concluida .item-titulo { text-decoration: line-through; }
+.item-meta { color: var(--texto-suave); font-size: .95rem; margin: .2rem 0 0; }
+.item-desc { margin: .3rem 0 0; }
+.item-acoes { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+/* Prioridade: cor + texto + forma (WCAG 1.4.1 – não só cor) */
+.selo { display: inline-block; padding: 0 .5rem; border: 2px solid currentColor; border-radius: 999px; font-weight: 700; font-size: .85rem; }
+.selo.alta { color: var(--alta); }
+.selo.media { color: var(--media); }
+.selo.baixa { color: var(--baixa); }
+.atrasada { color: var(--perigo); font-weight: 700; }
+
+.vazio { color: var(--texto-suave); font-style: italic; }
+
+/* ---------- Atalhos ---------- */
+.atalhos { display: grid; grid-template-columns: max-content 1fr; gap: .4rem 1rem; margin: 0; }
+.atalhos dt { font-weight: 600; }
+.atalhos dd { margin: 0; }
+kbd { border: 1px solid var(--borda); border-bottom-width: 3px; border-radius: 4px; padding: 0 .35rem; font-family: inherit; }
+
+/* ---------- Diálogo ---------- */
+dialog {
+  border: 2px solid var(--borda);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--texto);
+  max-width: 28rem;
+  width: calc(100% - 2rem);
+  padding: 1.5rem;
+}
+dialog::backdrop { background: rgba(0, 0, 0, .6); }
+
+/* ---------- Utilitários ---------- */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+[hidden] { display: none !important; }
+
+/* Respeita quem prefere menos movimento (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* Modo de cores forçadas do Windows (Alto Contraste do sistema) */
+@media (forced-colors: active) {
+  button[aria-pressed="true"] { border: 3px solid Highlight; }
+  .selo { border-color: CanvasText; }
+}
+
+@media (max-width: 30rem) {
+  .atalhos { grid-template-columns: 1fr; }
+  .atalhos dd { margin-bottom: .5rem; }
+}
